@@ -37,7 +37,7 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          projectName: wappon-28-dev
+          projectName: assets-center
           directory: ./.svelte-kit/cloudflare
 
       - name: 🚀 Deploy pages based on commit sha
