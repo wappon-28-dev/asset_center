@@ -1,0 +1,56 @@
+name: cloudflare
+
+on:
+  push:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ (github.ref == 'refs/heads/main' && 'production') || 'preview' }}
+    env:
+      BASE_ORIGIN: ${{ secrets.BASE_ORIGIN }}
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 🔨 Setup Bun Runtime
+        uses: antongolub/action-setup-bun@v1
+        with:
+          cache: true
+          cache-bin: true
+
+      - name: 🎉 Install project dependencies
+        run: bun i
+
+      - name: 🏗️ Generate static files
+        run: bun run build
+
+      - name: 🚀 Deploy to Cloudflare Pages
+        id: cloudflare_pages_deploy
+        uses: cloudflare/pages-action@v1.4.0
+        with:
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          projectName: wappon-28-dev
+          directory: ./.svelte-kit/cloudflare
+
+      - name: 🚀 Deploy pages based on commit sha
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const sha = context.payload.pull_request?.head.sha ?? context.sha;
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              context: 'cloudflare / build (push)',
+              description: 'Commit based deploy',
+              state: 'success',
+              sha,
+              target_url: "${{ steps.cloudflare_pages_deploy.outputs.url }}",
+            });

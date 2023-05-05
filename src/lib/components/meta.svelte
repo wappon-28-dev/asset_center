@@ -7,9 +7,11 @@
 
   const meta = pageManifest.meta;
   const title =
-    meta.title !== undefined ? `${meta.title} | Asset Center` : "Asset Center";
+    meta.title !== undefined
+      ? `${meta.title} | Assets Center`
+      : "Assets Center";
   const description =
-    meta.description ?? "Asset Center powered by wappon_28_dev.";
+    meta.description ?? "Assets Center powered by wappon_28_dev.";
   const imgUrl = meta.ogp.img ?? "https://iili.io/HXx1Vsf.png";
 
   const url = $page.url.toString();
