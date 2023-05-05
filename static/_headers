@@ -6,11 +6,3 @@ https://*.wappon-28-dev.pages.dev/*
 
 https://*.wappon-28-dev.com/*
   X-Robots-Tag: noindex
-
-/_app/*
-  X-Robots-Tag: noindex
-	Cache-Control: no-cache
-
-/_app/immutable/*
-  ! Cache-Control
-	Cache-Control: public, immutable, max-age=31536000
