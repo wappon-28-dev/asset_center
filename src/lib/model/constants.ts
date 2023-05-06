@@ -32,6 +32,8 @@ const runTransitionRaw = async (to: string): void => {
   void goto(base + to);
 };
 
+const repositoryUrl = "https://github.com/wappon-28-dev/assets_center";
+
 function isLandscapeDetect(): boolean {
   return (
     navigator.userAgent.match(/iPhone|Android.+Mobile/) == null &&
@@ -40,4 +42,10 @@ function isLandscapeDetect(): boolean {
 }
 
 export type { valueOf, PickType };
-export { runTransition, runTransitionRaw, waitMs, isLandscapeDetect };
+export {
+  runTransition,
+  runTransitionRaw,
+  repositoryUrl,
+  waitMs,
+  isLandscapeDetect,
+};

@@ -4,6 +4,7 @@
   import Splash from "$lib/components/Splash.svelte";
   import {
     isLandscapeDetect,
+    repositoryUrl,
     runTransition,
     runTransitionRaw,
   } from "$lib/model/constants";
@@ -64,7 +65,7 @@
       </Section>
       <Section align="end" toolbar>
         <Button
-          on:click={() => runTransitionRaw("/blog")}
+          on:click={() => runTransitionRaw(repositoryUrl)}
           aria-label="ソースを見に行く"
         >
           <Icon><Launch /></Icon>

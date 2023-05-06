@@ -1,8 +1,5 @@
 <script lang="ts">
-  import Inquiry from "$lib/assets/Inquiry.svelte";
-  import NotFound from "$lib/assets/NotFound.svelte";
   import Ready from "$lib/assets/Ready.svelte";
-  import Transfer from "$lib/assets/Transfer.svelte";
   import Meta from "$lib/components/Meta.svelte";
   import { pageManifests } from "$lib/model/manifests";
   import { isLoading } from "$lib/model/store";
@@ -15,10 +12,11 @@
 
 <div class="container">
   <article>
-    <Inquiry scale="1" /><br />
-    <NotFound scale="1" /><br />
-    <Transfer scale="1" /><br />
-    <Ready scale="1" /><br />
+    <Ready scale="1.5" /><br />
+    <div class="explained break-keep">
+      <p>アセットの<wbr />お受取所です</p>
+      <p>This is where you receive your assets.</p>
+    </div>
   </article>
 </div>
 
@@ -32,6 +30,16 @@
       display: table-cell;
       vertical-align: middle;
       text-align: center;
+
+      .explained {
+        margin: 30px;
+        :first-child {
+          font-size: 2rem;
+          font-weight: 500;
+          line-height: 1.2;
+          margin-bottom: 1rem;
+        }
+      }
     }
   }
 </style>
