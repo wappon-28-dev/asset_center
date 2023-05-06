@@ -35,7 +35,7 @@
       .text-container {
         font-size: 2rem;
         line-height: normal;
-        font-weight: 700;
+        font-weight: 500;
         padding: 30px;
         border-radius: 20px;
         background-color: var(--m3-inverse-primary);

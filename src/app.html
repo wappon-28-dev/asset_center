@@ -12,30 +12,6 @@
     content="width=device-width, initial-scale=1"
   />
 
-  <!-- Google Fonts -->
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  >
-  <link
-    rel="dns-prefetch"
-    href="//fonts.googleapis.com"
-  >
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  >
-  <link
-    rel="dns-prefetch"
-    href="//fonts.gstatic.com"
-    crossorigin
-  >
-  <link
-    href="https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@500;700;900&display=swap"
-    rel="stylesheet"
-  >
-
   <!-- SMUI Styles -->
   <link
     href="%sveltekit.assets%/styles/smui.css"
@@ -76,5 +52,28 @@
     style="display: contents"
   >%sveltekit.body%</div>
 </body>
+
+<style>
+  @font-face {
+    font-family: "LINE Seed JP";
+    src: url("%sveltekit.assets%/fonts/LINESeedJP_OTF_Bd.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "LINE Seed JP";
+    src: url("%sveltekit.assets%/fonts/LINESeedJP_OTF_Eb.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "LINE Seed JP";
+    src: url("%sveltekit.assets%/fonts/LINESeedJP_OTF_Rg.woff2") format("woff2");
+    font-weight: 800;
+    font-style: normal;
+  }
+</style>
 
 </html>

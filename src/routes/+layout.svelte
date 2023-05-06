@@ -59,7 +59,7 @@
           <CloudSyncOutline />
         </IconButton>
         <Title on:click={() => runTransition(pageManifests.HOME)}
-          ><strong>Assets Center</strong></Title
+          >Assets Center</Title
         >
       </Section>
       <Section align="end" toolbar>
