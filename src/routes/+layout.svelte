@@ -124,6 +124,7 @@
     right: 0;
     padding: 10px;
     font-size: 0.8rem;
+    font-weight: 500;
     color: var(--m3-on-surface);
   }
 </style>
