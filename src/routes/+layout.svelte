@@ -1,7 +1,7 @@
 <script lang="ts">
-  import BackToTop from "$lib/components/back-to-top.svelte";
-  import PageTransition from "$lib/components/page-transition.svelte";
-  import Splash from "$lib/components/splash.svelte";
+  import BackToTop from "$lib/components/Back2Top.svelte";
+  import PageTransition from "$lib/components/PageTransition.svelte";
+  import Splash from "$lib/components/Splash.svelte";
   import {
     isLandscapeDetect,
     runTransition,

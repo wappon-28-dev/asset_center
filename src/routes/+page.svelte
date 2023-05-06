@@ -1,6 +1,9 @@
 <script lang="ts">
-  import Tree from "$lib/assets/animated/tree.svelte";
-  import Meta from "$lib/components/meta.svelte";
+  import Inquiry from "$lib/assets/Inquiry.svelte";
+  import NotFound from "$lib/assets/NotFound.svelte";
+  import Ready from "$lib/assets/Ready.svelte";
+  import Transfer from "$lib/assets/Transfer.svelte";
+  import Meta from "$lib/components/Meta.svelte";
   import { pageManifests } from "$lib/model/manifests";
   import { isLoading } from "$lib/model/store";
   import { onMount } from "svelte";
@@ -12,11 +15,10 @@
 
 <div class="container">
   <article>
-    <Tree size={200} />
-    <div class="text-container">
-      <div>COMING SOON</div>
-      <div>近日公開予定</div>
-    </div>
+    <Inquiry scale="1" /><br />
+    <NotFound scale="1" /><br />
+    <Transfer scale="1" /><br />
+    <Ready scale="1" /><br />
   </article>
 </div>
 
@@ -30,16 +32,6 @@
       display: table-cell;
       vertical-align: middle;
       text-align: center;
-      transform: translateY(calc(var(--app-bar-height) * -1));
-
-      .text-container {
-        font-size: 2rem;
-        line-height: normal;
-        font-weight: 500;
-        padding: 30px;
-        border-radius: 20px;
-        background-color: var(--m3-inverse-primary);
-      }
     }
   }
 </style>
