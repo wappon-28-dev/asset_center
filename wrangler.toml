@@ -1,0 +1,13 @@
+name = "assets_center"
+compatibility_date = "2023-05-06"
+main = "./.svelte-kit/cloudflare/_worker.js"
+
+kv_namespaces = [
+  { binding = "ASSETS_CENTER_TOKENS", id = "8bb81f4ab32c46e9b3e40cb23c1c4b02", preview_id = "a467dfe74e2b4208b20b37c86cf5d26f" },
+]
+
+[site]
+bucket = "./.svelte-kit/cloudflare"
+
+[build]
+command = "bun run build"

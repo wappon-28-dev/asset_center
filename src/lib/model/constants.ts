@@ -1,7 +1,9 @@
 import { goto } from "$app/navigation";
 import { base } from "$app/paths";
 import { page } from "$app/stores";
+import { env } from "$env/dynamic/public";
 import { get } from "svelte/store";
+import { z } from "zod";
 import type { PageManifest } from "./manifests";
 import { isLoading } from "./store";
 
@@ -32,7 +34,13 @@ const runTransitionRaw = async (to: string): void => {
   void goto(base + to);
 };
 
-const repositoryUrl = "https://github.com/wappon-28-dev/assets_center";
+const url = {
+  tokenRequestEndpoint: () => {
+    const clientId = z.string().parse(env.CLIENT_ID);
+    return `https://login.microsoftonline.com/${clientId}/oauth2/v2.0/token`;
+  },
+  repository: "https://github.com/wappon-28-dev/assets_center",
+};
 
 function isLandscapeDetect(): boolean {
   return (
@@ -42,10 +50,4 @@ function isLandscapeDetect(): boolean {
 }
 
 export type { valueOf, PickType };
-export {
-  runTransition,
-  runTransitionRaw,
-  repositoryUrl,
-  waitMs,
-  isLandscapeDetect,
-};
+export { runTransition, runTransitionRaw, url, waitMs, isLandscapeDetect };

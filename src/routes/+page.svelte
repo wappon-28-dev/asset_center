@@ -15,7 +15,7 @@
     <Ready scale="1.5" /><br />
     <div class="explained break-keep">
       <p>アセットの<wbr />お受取所です</p>
-      <p>This is where you receive your assets.</p>
+      <p>This is where you receive your assets</p>
     </div>
   </article>
 </div>
