@@ -10,7 +10,7 @@
 
 <div class="container">
   <article>
-    Directoryを列挙する
+    protected ページでディレクトリは指定できません
     <div class="text-container">
       <div>{data.pathname}</div>
     </div>

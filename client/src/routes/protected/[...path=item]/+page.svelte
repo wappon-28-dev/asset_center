@@ -10,7 +10,7 @@
 
 <div class="container">
   <article>
-    Directoryを列挙する
+    protected item
     <div class="text-container">
       <div>{data.pathname}</div>
     </div>

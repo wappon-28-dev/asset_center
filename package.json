@@ -4,15 +4,14 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build": "yarn workspace @assets_center/client run build",
-    "dev": "yarn workspace @assets_center/client run dev",
-    "dev:analyzer": "yarn workspace @assets_center/server run dev",
-    "test:analyzer": "yarn workspace @assets_center/server run test"
+    "build": "yarn workspace assets_center run build",
+    "dev": "yarn workspace assets_center run dev",
+    "dev:api": "yarn workspace w28d_api run dev"
   },
   "workspaces": {
     "packages": [
-      "client",
-      "server"
+      "api",
+      "client"
     ]
   }
 }

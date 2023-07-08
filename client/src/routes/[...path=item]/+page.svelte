@@ -10,7 +10,7 @@
 
 <div class="container">
   <article>
-    Directoryを列挙する
+    item path
     <div class="text-container">
       <div>{data.pathname}</div>
     </div>
