@@ -1,7 +1,7 @@
 import { writable } from "svelte/store";
 
-const isLoading = writable(true);
-const isBusy = writable(false);
-const isLandscape = writable(false);
+export const isLoading = writable(true);
+export const isBusy = writable(false);
+export const isLandscape = writable(false);
 
-export { isLoading, isBusy, isLandscape };
+export const loadedBytes = writable<number | undefined>(undefined);

@@ -89,6 +89,9 @@
     </AppContent>
   </AutoAdjust>
 
+  <div class="path" class:isLandscape={$isLandscape}>
+    <code>{data.pathname}</code>
+  </div>
   <div class="author">powered by @wappon28dev / わっぽん</div>
   <BackToTop />
 </div>
@@ -107,18 +110,26 @@
     }
   }
 
-  :global(
-      .mdc-circular-progress__determinate-circle,
-      .mdc-circular-progress__indeterminate-circle-graphic
-    ) {
-    stroke: var(--m3-on-primary);
-  }
-
   .progress-mobile {
     margin-top: -5.5px;
     min-height: 4px;
   }
 
+  .path {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 10px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--m3-on-surface);
+
+    &:not(.isLandscape) {
+      position: absolute;
+      top: 6%;
+      left: 0;
+    }
+  }
   .author {
     position: absolute;
     bottom: 0;

@@ -5,14 +5,14 @@ import { get } from "svelte/store";
 import type { PageManifest } from "./manifests";
 import { isLoading } from "./store";
 
-type valueOf<T> = T[keyof T];
-type PickType<T, K extends keyof T> = T[K];
+export type valueOf<T> = T[keyof T];
+export type PickType<T, K extends keyof T> = T[K];
 
-const waitMs = async (ms: number): Promise<void> => {
+export const waitMs = async (ms: number): Promise<void> => {
   await new Promise((resolve) => setTimeout(resolve, ms));
 };
 
-const runTransition = (to: PageManifest): void => {
+export const runTransition = (to: PageManifest): void => {
   isLoading.set(true);
   const path = to.path;
 
@@ -24,7 +24,7 @@ const runTransition = (to: PageManifest): void => {
   void goto(base + path);
 };
 
-const runTransitionRaw = async (to: string): Promise<void> => {
+export const runTransitionRaw = async (to: string): Promise<void> => {
   isLoading.set(true);
 
   if (get(page).url.pathname === to) {
@@ -36,16 +36,23 @@ const runTransitionRaw = async (to: string): Promise<void> => {
   void goto(base + to);
 };
 
-const url = {
+export const url = {
   repository: "https://github.com/wappon-28-dev/assets_center",
 };
 
-function isLandscapeDetect(): boolean {
+export function isLandscapeDetect(): boolean {
   return (
     navigator.userAgent.match(/iPhone|Android.+Mobile/) == null &&
     window.innerWidth > 730
   );
 }
 
-export { isLandscapeDetect, runTransition, runTransitionRaw, url, waitMs };
-export type { PickType, valueOf };
+export function byteToUnit(bytes: number, digit = 2): string {
+  const unit = [" ", " K", " M", " G", " T", " P"];
+  let count = 0;
+  while (bytes >= 1024 && count < unit.length) {
+    bytes /= 1024;
+    ++count;
+  }
+  return bytes.toFixed(digit) + unit[count] + "B";
+}
