@@ -6,31 +6,32 @@
   import type { PageData } from "./$types";
 
   export let data: PageData;
-  const dirPath = data.pathname.split("/").slice(1).join("/");
+  const filePath = data.pathname.split("/").slice(2).join("/");
 
-  const getChildren = client.v1.assets.public.children.$get;
-  let children: InferResponseType<typeof getChildren>;
+  const getItem = client.v1.assets.public.item.$get;
+  let item: InferResponseType<typeof getItem>;
 
   onMount(async () => {
-    const res = await getChildren({
+    const res = await getItem({
       query: {
-        dirPath,
+        filePath,
       },
     });
 
     if (res.ok) {
-      children = await res.json();
+      item = await res.json();
     }
+
     $isLoading = false;
   });
 </script>
 
 <div class="container">
   <article>
-    Directoryを列挙する
+    item path
     <div class="text-container">
       <div>{data.pathname}</div>
-      {JSON.stringify(children)}
+      {JSON.stringify(item)}
     </div>
   </article>
 </div>

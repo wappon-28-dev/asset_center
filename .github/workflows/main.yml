@@ -11,8 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: ${{ (github.ref == 'refs/heads/main' && 'production') || 'preview' }}
-    env:
-      BASE_ORIGIN: ${{ secrets.BASE_ORIGIN }}
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
     steps:
       - name: 📥 Checkout repository
@@ -32,6 +30,9 @@ jobs:
 
       - name: 🏗️ Generate static files
         run: yarn build
+        env:
+          BASE_ORIGIN: ${{ secrets.BASE_ORIGIN }}
+          PUBLIC_API_ENDPOINT: ${{ secrets.PUBLIC_API_ENDPOINT }}
 
       - name: 🚀 Deploy to Cloudflare Pages
         id: cloudflare_pages_deploy

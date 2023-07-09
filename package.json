@@ -6,7 +6,8 @@
   "scripts": {
     "build": "yarn workspace assets_center run build",
     "dev": "yarn workspace assets_center run dev",
-    "dev:api": "yarn workspace w28d_api run dev"
+    "dev:api": "yarn workspace w28d_api run dev",
+    "prepare": "yarn workspace assets_center run prepare"
   },
   "workspaces": {
     "packages": [
