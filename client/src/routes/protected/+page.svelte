@@ -2,7 +2,7 @@
   import { isLoading } from "$lib/model/store";
   import { onMount } from "svelte";
   import type { PageData } from "./$types";
-  
+
   export let data: PageData;
 
   onMount(() => ($isLoading = false));
@@ -15,8 +15,7 @@
       <div>{data.pathname}</div>
     </div>
   </article>
-  </div>
+</div>
 
 <style lang="scss">
-
 </style>
