@@ -89,7 +89,7 @@
     </AppContent>
   </AutoAdjust>
 
-  <div class="author">powered by @wappon_28_dev / わっぽん</div>
+  <div class="author">powered by @wappon28dev / わっぽん</div>
   <BackToTop />
 </div>
 <Splash isMounting={!hasMounted} isLoading={$isLoading} />

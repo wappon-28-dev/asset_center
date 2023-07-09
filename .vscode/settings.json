@@ -10,6 +10,8 @@
     "ecma",
     "errorlens",
     "esbenp",
+    "hono",
+    "Hono",
     "mosapride",
     "quickfixes",
     "scrollto",
@@ -18,6 +20,5 @@
     "usernamehw",
     "Yoshinori",
     "zenkaku"
-  ],
-  "nuxt.isNuxtApp": false
+  ]
 }
