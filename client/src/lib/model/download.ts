@@ -2,9 +2,12 @@ import { loadedBytes } from "./store";
 
 export async function downloadAndGetUrl(
   url: string,
-  contentLength: number
+  contentLength: number,
+  signal: AbortSignal
 ): Promise<string> {
-  const res = await fetch(url);
+  const res = await fetch(url, {
+    signal,
+  });
   const total = contentLength;
   let chunk = 0;
 
