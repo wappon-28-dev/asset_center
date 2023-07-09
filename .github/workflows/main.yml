@@ -18,17 +18,20 @@ jobs:
       - name: 📥 Checkout repository
         uses: actions/checkout@v3
 
-      - name: 🔨 Setup Bun Runtime
-        uses: antongolub/action-setup-bun@v1
+      - name: 📸 Calculate commit hash
+        id: sha
+        uses: pr-mpt/actions-commit-hash@v2
+
+      - name: 🔨 Prepare Node environment
+        uses: actions/setup-node@v3
         with:
-          cache: true
-          cache-bin: true
+          node-version: 19
 
       - name: 🎉 Install project dependencies
-        run: bun i
+        run: yarn
 
       - name: 🏗️ Generate static files
-        run: bun run build
+        run: yarn build
 
       - name: 🚀 Deploy to Cloudflare Pages
         id: cloudflare_pages_deploy
@@ -38,7 +41,7 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           projectName: assets-center
-          directory: ./.svelte-kit/cloudflare
+          directory: ./client/.svelte-kit/cloudflare
 
       - name: 🚀 Deploy pages based on commit sha
         uses: actions/github-script@v6
