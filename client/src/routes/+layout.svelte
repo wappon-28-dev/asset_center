@@ -41,7 +41,9 @@
 
     // callback prefers-color-scheme event
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
-    prefersDark.addEventListener("change", () => new ThemeProvider().update());
+    prefersDark.addEventListener("change", () => {
+      new ThemeProvider().update();
+    });
   });
 
   function updateSize(): void {
@@ -54,18 +56,24 @@
     <Row>
       <Section>
         <IconButton
-          on:click={() => runTransition(pageManifests.HOME)}
+          on:click={() => {
+            runTransition(pageManifests.HOME);
+          }}
           aria-label="ホーム"
         >
           <CloudSyncOutline />
         </IconButton>
-        <Title on:click={() => runTransition(pageManifests.HOME)}
-          >Assets Center</Title
+        <Title
+          on:click={() => {
+            runTransition(pageManifests.HOME);
+          }}>Assets Center</Title
         >
       </Section>
       <Section align="end" toolbar>
         <Button
-          on:click={() => runTransitionRaw(url.repository)}
+          on:click={async () => {
+            await runTransitionRaw(url.repository);
+          }}
           aria-label="ソースを見に行く"
         >
           <Icon><Launch /></Icon>

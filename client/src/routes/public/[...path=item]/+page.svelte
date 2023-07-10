@@ -10,24 +10,22 @@
   export let data: PageData;
   let open = false;
 
-  const { itemDataFn, metaDataFn } = data;
-  const info = Promise.all([itemDataFn(), metaDataFn()]).finally(
-    () => ($isLoading = false)
-  );
+  const { getItemFn } = data;
+  const info = getItemFn().finally(() => ($isLoading = false));
 </script>
 
 <div class="container">
   <article>
     {#await info}
       メタデータを読み込み中です…
-    {:then [itemData, metaData]}
+    {:then { item, meta }}
       <br />
       <Inquiry scale={1.5} /><br />
       <div class="info">
         <div class="name">
-          <p class="title">{metaData.fields.Title}</p>
-          <code>{itemData.name}</code>
-          <p>{metaData.fields.Desc}</p>
+          <p class="title">{meta.fields.Title}</p>
+          <code>{item.name}</code>
+          <p>{meta.fields.Desc}</p>
         </div>
         <br />
 
@@ -42,13 +40,13 @@
           <Icon>
             <TrayArrowDown />
           </Icon>
-          <Label>{metaData.fields.DistName}</Label>
+          <Label>{meta.fields.DistName}</Label>
         </Button>
 
         <div class="meta">
           <p>
-            サイズ: {byteToUnit(itemData.size)}・更新日時: {new Date(
-              itemData.lastModifiedDateTime
+            サイズ: {byteToUnit(item.size)}・更新日時: {new Date(
+              item.lastModifiedDateTime
             ).toLocaleString()}
           </p>
         </div>
@@ -56,9 +54,9 @@
 
       <DownloadDialog
         {open}
-        url={itemData["@microsoft.graph.downloadUrl"]}
-        fileName={itemData.name}
-        size={itemData.size}
+        url={item["@microsoft.graph.downloadUrl"]}
+        fileName={item.name}
+        size={item.size}
       />
     {:catch err}
       {err}
