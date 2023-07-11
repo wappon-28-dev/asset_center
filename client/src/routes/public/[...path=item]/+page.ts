@@ -24,7 +24,7 @@ export const load = (async ({ params }) => {
       }
     }
   }
-  return { getItemFn: getItem };
+  return { getItem };
 }) satisfies PageLoad;
 
 export const prerender = false;
