@@ -36,7 +36,9 @@
               {#each children.value as child, index}
                 <Item
                   on:click={() =>
-                    runTransitionRaw(`${data.pathname}/${child.name}`)}
+                    runTransitionRaw(
+                      `${String(data.pathname)}/${String(child.name)}`
+                    )}
                 >
                   <Graphic>
                     {#if child.folder == null}
@@ -79,9 +81,10 @@
 
     article {
       .loading {
-        display: table-cell;
-        vertical-align: middle;
-        text-align: center;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
       }
       .dir-info {
         .display-name {

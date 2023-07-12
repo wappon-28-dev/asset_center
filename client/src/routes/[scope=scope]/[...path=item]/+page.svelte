@@ -5,14 +5,22 @@
   import { isLoading } from "$lib/model/store";
   import Button, { Icon, Label } from "@smui/button";
   import Card, { Content } from "@smui/card";
+  import FileEyeOutline from "svelte-material-icons/FileEyeOutline.svelte";
   import TrayArrowDown from "svelte-material-icons/TrayArrowDown.svelte";
   import type { PageData } from "./$types";
 
   export let data: PageData;
   let open = false;
+  let needDownload = true;
 
   const { getItem } = data;
   const info = getItem().finally(() => ($isLoading = false));
+
+  const openDialog = (isDownload: boolean): void => {
+    needDownload = isDownload;
+    open = false;
+    open = true;
+  };
 </script>
 
 <div class="container">
@@ -38,14 +46,26 @@
                 variant="raised"
                 disabled={$isLoading}
                 on:click={async () => {
-                  open = false;
-                  open = true;
+                  openDialog(true);
                 }}
               >
                 <Icon>
                   <TrayArrowDown />
                 </Icon>
                 <Label>{item.fields.DistName}</Label>
+              </Button>
+              <div style="padding: 0.2rem" />
+              <Button
+                variant="outline"
+                disabled={$isLoading}
+                on:click={async () => {
+                  openDialog(false);
+                }}
+              >
+                <Icon>
+                  <FileEyeOutline />
+                </Icon>
+                <Label>プレビュー</Label>
               </Button>
             </Content>
           </div>
@@ -59,7 +79,7 @@
         </p>
       </div>
 
-      <DownloadDialog {open} {item} />
+      <DownloadDialog {open} {item} {needDownload} />
     {:catch err}
       {err}
     {/await}

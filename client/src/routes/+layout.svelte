@@ -9,12 +9,13 @@
     url,
   } from "$lib/model/constants";
   import { pageManifests } from "$lib/model/manifests";
-  import { isLandscape, isLoading } from "$lib/model/store";
+  import { isLandscape, isLoading, kitchen } from "$lib/model/store";
   import { ThemeProvider } from "$lib/model/theme";
   import Button, { Label } from "@smui/button";
   import { AppContent } from "@smui/drawer";
   import IconButton, { Icon } from "@smui/icon-button";
   import LinearProgress from "@smui/linear-progress";
+  import Kitchen from "@smui/snackbar/kitchen";
   import type TopAppBarComponentDev from "@smui/top-app-bar";
   import TopAppBar, {
     AutoAdjust,
@@ -104,6 +105,7 @@
   <BackToTop />
 </div>
 <Splash isMounting={!hasMounted} isLoading={$isLoading} />
+<Kitchen bind:this={$kitchen} />
 
 <style lang="scss">
   :global(.app-content) {
