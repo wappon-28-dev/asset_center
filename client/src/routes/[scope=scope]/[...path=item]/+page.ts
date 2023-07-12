@@ -3,16 +3,13 @@ import type { InferResponseType } from "hono";
 import type { PageLoad } from "./$types";
 
 export const load = (async ({ params }) => {
-  const dirPath = params.path;
-  const apiGetChildren = client.v1.assets.public.children.$get;
+  const { path: filePath, scope } = params;
+  const apiGetItem = client.v1.assets[":scope"].item.$get;
 
-  async function getChildren(): Promise<
-    InferResponseType<typeof apiGetChildren>
-  > {
-    const res = await apiGetChildren({
-      query: {
-        dirPath,
-      },
+  async function getItem(): Promise<InferResponseType<typeof apiGetItem>> {
+    const res = await apiGetItem({
+      param: { scope },
+      query: { filePath },
     });
     const data = await res.json();
 
@@ -26,8 +23,7 @@ export const load = (async ({ params }) => {
       }
     }
   }
-
-  return { getChildren };
+  return { getItem };
 }) satisfies PageLoad;
 
 export const prerender = false;

@@ -3,6 +3,7 @@ import { loadedBytes } from "./store";
 export async function downloadAndGetUrl(
   url: string,
   contentLength: number,
+  mimeType: string,
   signal: AbortSignal
 ): Promise<string> {
   const res = await fetch(url, {
@@ -36,11 +37,11 @@ export async function downloadAndGetUrl(
           controller.enqueue(value);
         }
       },
-    })
+    }),
+    { headers: { "Content-Length": contentLength.toString() } }
   );
-
   console.log("download completed");
-  const blob = await response.blob();
-
+  const data = await response.blob();
+  const blob = new Blob([data], { type: mimeType });
   return URL.createObjectURL(blob);
 }

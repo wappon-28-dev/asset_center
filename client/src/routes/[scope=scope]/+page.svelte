@@ -10,7 +10,7 @@
 
 <div class="container">
   <article>
-    protected root
+    {data.pathname} root
     <div class="text-container">
       <div>{data.pathname}</div>
     </div>

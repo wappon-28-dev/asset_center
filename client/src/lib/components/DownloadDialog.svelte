@@ -1,44 +1,52 @@
 <script lang="ts">
   import Transfer from "$lib/assets/Transfer.svelte";
-  import { byteToUnit, waitMs } from "$lib/model/constants";
+  import { byteToUnit, runTransitionRaw, waitMs } from "$lib/model/constants";
   import { downloadAndGetUrl } from "$lib/model/download";
   import { loadedBytes } from "$lib/model/store";
+  import type { resValidator } from "@api/types/res_req";
   import Button, { Label } from "@smui/button";
   import Dialog, { Actions, Content } from "@smui/dialog";
   import LinearProgress from "@smui/linear-progress";
+  import type { z } from "zod";
 
   export let open = false;
-  export let url: string;
-  export let fileName: string;
-  export let size: number;
+  export let item: z.infer<(typeof resValidator)["listItem"]>;
+
+  const { "@microsoft.graph.downloadUrl": url, size, file } = item.driveItem;
 
   let controller = new AbortController();
 
-  async function downloadItem(
-    url: string,
-    fileName: string,
-    size: number
-  ): Promise<void> {
+  async function downloadItem(): Promise<void> {
+    if (url == null) throw new Error("downloadUrl is null");
+
     $loadedBytes = 0;
     controller = new AbortController();
-    const downloadUrl = await downloadAndGetUrl(url, size, controller.signal);
-    const anchor = document.createElement("a");
-    anchor.setAttribute("href", downloadUrl);
-    anchor.setAttribute("download", fileName);
-    const mouseEvent = new MouseEvent("click", {
-      bubbles: true,
-      cancelable: true,
-      view: window,
-    });
-    anchor.dispatchEvent(mouseEvent);
-    await waitMs(3000);
+
+    const downloadUrl = await downloadAndGetUrl(
+      url,
+      size,
+      file?.mimeType ?? "application/octet-stream",
+      controller.signal
+    );
+
+    await waitMs(600);
+    runTransitionRaw(downloadUrl);
+    // const anchor = document.createElement("a");
+    // anchor.setAttribute("href", downloadUrl);
+    // anchor.setAttribute("download", fileName);
+    // const mouseEvent = new MouseEvent("click", {
+    //   bubbles: true,
+    //   cancelable: true,
+    //   view: window,
+    // });
+    // anchor.dispatchEvent(mouseEvent);
     open = false;
     $loadedBytes = undefined;
   }
 
   $: {
     if (open) {
-      void downloadItem(url, fileName, size);
+      void downloadItem();
     }
   }
 </script>
