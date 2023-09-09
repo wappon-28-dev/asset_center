@@ -17,7 +17,7 @@ export default {
       fallback: "index.html",
     }),
     prerender: {
-      origin: process.env.BASE_ORIGIN,
+      origin: process.env.PUBLIC_BASE_ORIGIN,
     },
   },
 };

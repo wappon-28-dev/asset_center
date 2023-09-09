@@ -31,8 +31,9 @@ jobs:
       - name: 🏗️ Generate static files
         run: yarn build
         env:
-          BASE_ORIGIN: ${{ secrets.BASE_ORIGIN }}
-          PUBLIC_API_ENDPOINT: ${{ secrets.PUBLIC_API_ENDPOINT }}
+          PUBLIC_BASE_ORIGIN: ${{ env.PUBLIC_BASE_ORIGIN }}
+          PUBLIC_API_ENDPOINT: ${{ env.PUBLIC_API_ENDPOINT }}
+          PUBLIC_MANIFESTS: ${{ env.PUBLIC_MANIFESTS }}
 
       - name: 🚀 Deploy to Cloudflare Pages
         id: cloudflare_pages_deploy

@@ -14,7 +14,12 @@
   let needDownload = true;
 
   const { getItem } = data;
-  const info = getItem().finally(() => ($isLoading = false));
+  const info = getItem()
+    .catch((e) => {
+      console.warn(e);
+      throw e;
+    })
+    .finally(() => ($isLoading = false));
 
   const openDialog = (isDownload: boolean): void => {
     needDownload = isDownload;
@@ -56,7 +61,7 @@
               </Button>
               <div style="padding: 0.2rem" />
               <Button
-                variant="outline"
+                variant="outlined"
                 disabled={$isLoading}
                 on:click={async () => {
                   openDialog(false);
@@ -74,7 +79,7 @@
       <div class="meta">
         <p>
           サイズ: {byteToUnit(item.driveItem.size)}・更新日時: {new Date(
-            item.lastModifiedDateTime
+            item.lastModifiedDateTime,
           ).toLocaleString()}
         </p>
       </div>

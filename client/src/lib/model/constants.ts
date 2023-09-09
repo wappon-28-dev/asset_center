@@ -4,6 +4,8 @@ import { base } from "$app/paths";
 import { page } from "$app/stores";
 import type { PageManifest } from "./manifests";
 import { isLoading } from "./store";
+import type { AssetsManifests } from "./types/manifest";
+import { PUBLIC_MANIFESTS } from "$env/static/public";
 
 export type valueOf<T> = T[keyof T];
 export type PickType<T, K extends keyof T> = T[K];
@@ -59,4 +61,15 @@ export function byteToUnit(bytes: number, digit = 2): string {
     count += 1;
   }
   return `${_bytes.toFixed(digit) + unit[count]}B`;
+}
+
+export function getAssetsManifests(): AssetsManifests {
+  return JSON.parse(PUBLIC_MANIFESTS);
+}
+
+export function getAuthHeader(key: keyof AssetsManifests): string {
+  const manifest = getAssetsManifests()[key];
+  if (manifest == null) throw new Error("assets key not found");
+
+  return `Bearer ${manifest.accessKey}`;
 }
