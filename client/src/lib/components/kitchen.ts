@@ -1,5 +1,5 @@
-import { kitchen } from "$lib/model/store";
 import { get } from "svelte/store";
+import { kitchen } from "$lib/model/store";
 
 export type KitchenArgs = {
   props?: {

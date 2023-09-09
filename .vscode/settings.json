@@ -2,6 +2,7 @@
   "eslint.probe": ["typescript", "svelte"],
   "eslint.validate": ["typescript", "svelte"],
   "cSpell.words": [
+    "airbnb",
     "ardenivanov",
     "CEINTL",
     "cloudflare",

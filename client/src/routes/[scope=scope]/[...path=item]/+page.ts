@@ -1,5 +1,5 @@
-import { client } from "$lib/model/service/client";
 import type { InferResponseType } from "hono";
+import { client } from "$lib/model/service/client";
 import type { PageLoad } from "./$types";
 
 export const load = (async ({ params }) => {
@@ -15,12 +15,11 @@ export const load = (async ({ params }) => {
 
     if (res.ok) {
       return data;
+    }
+    if (res.status === 404) {
+      throw new Error("ASSET_NOT_FOUND");
     } else {
-      if (res.status === 404) {
-        throw new Error("ASSET_NOT_FOUND");
-      } else {
-        throw new Error(`FETCH_ERROR ${String(await res.text())}`);
-      }
+      throw new Error(`FETCH_ERROR ${String(await res.text())}`);
     }
   }
   return { getItem };

@@ -1,9 +1,9 @@
 <script lang="ts">
+  import Card, { Content } from "@smui/card";
+  import { onMount } from "svelte";
   import { page } from "$app/stores";
   import NotFound from "$lib/assets/NotFound.svelte";
   import { isLoading } from "$lib/model/store";
-  import Card, { Content } from "@smui/card";
-  import { onMount } from "svelte";
 
   onMount(() => ($isLoading = false));
 </script>

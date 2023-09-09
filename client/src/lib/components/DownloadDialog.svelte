@@ -1,13 +1,13 @@
 <script lang="ts">
-  import Transfer from "$lib/assets/Transfer.svelte";
-  import { byteToUnit, waitMs } from "$lib/model/constants";
-  import { downloadAndGetUrl } from "$lib/model/download";
-  import { kitchen, loadedBytes } from "$lib/model/store";
   import type { resValidator } from "@api/types/res_req";
   import Button, { Label } from "@smui/button";
   import Dialog, { Actions, Content } from "@smui/dialog";
   import LinearProgress from "@smui/linear-progress";
   import type { z } from "zod";
+  import { kitchen, loadedBytes } from "$lib/model/store";
+  import { downloadAndGetUrl } from "$lib/model/download";
+  import { byteToUnit, waitMs } from "$lib/model/constants";
+  import Transfer from "$lib/assets/Transfer.svelte";
 
   export let open = false;
   export let needDownload = true;

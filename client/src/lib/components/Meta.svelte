@@ -1,11 +1,11 @@
 <script lang="ts">
+  import { MetaTags } from "svelte-meta-tags";
   import { page } from "$app/stores";
   import type { PageManifest } from "$lib/model/manifests";
-  import { MetaTags } from "svelte-meta-tags";
 
   export let pageManifest: PageManifest;
 
-  const meta = pageManifest.meta;
+  const { meta } = pageManifest;
   const title =
     meta.title !== undefined
       ? `${meta.title} | Assets Center`

@@ -1,7 +1,7 @@
+import { get } from "svelte/store";
 import { goto } from "$app/navigation";
 import { base } from "$app/paths";
 import { page } from "$app/stores";
-import { get } from "svelte/store";
 import type { PageManifest } from "./manifests";
 import { isLoading } from "./store";
 
@@ -9,12 +9,14 @@ export type valueOf<T> = T[keyof T];
 export type PickType<T, K extends keyof T> = T[K];
 
 export const waitMs = async (ms: number): Promise<void> => {
-  await new Promise((resolve) => setTimeout(resolve, ms));
+  await new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
 };
 
 export const runTransition = (to: PageManifest): void => {
   isLoading.set(true);
-  const path = to.path;
+  const { path } = to;
 
   if (get(page).url.pathname === path) {
     isLoading.set(false);
@@ -49,10 +51,12 @@ export function isLandscapeDetect(): boolean {
 
 export function byteToUnit(bytes: number, digit = 2): string {
   const unit = [" ", " K", " M", " G", " T", " P"];
+  let _bytes = bytes;
   let count = 0;
-  while (bytes >= 1024 && count < unit.length) {
-    bytes /= 1024;
-    ++count;
+
+  while (_bytes >= 1024 && count < unit.length) {
+    _bytes /= 1024;
+    count += 1;
   }
-  return bytes.toFixed(digit) + unit[count] + "B";
+  return `${_bytes.toFixed(digit) + unit[count]}B`;
 }

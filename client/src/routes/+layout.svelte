@@ -1,16 +1,4 @@
 <script lang="ts">
-  import BackToTop from "$lib/components/Back2Top.svelte";
-  import PageTransition from "$lib/components/PageTransition.svelte";
-  import Splash from "$lib/components/Splash.svelte";
-  import {
-    isLandscapeDetect,
-    runTransition,
-    runTransitionRaw,
-    url,
-  } from "$lib/model/constants";
-  import { pageManifests } from "$lib/model/manifests";
-  import { isLandscape, isLoading, kitchen } from "$lib/model/store";
-  import { ThemeProvider } from "$lib/model/theme";
   import Button, { Label } from "@smui/button";
   import { AppContent } from "@smui/drawer";
   import IconButton, { Icon } from "@smui/icon-button";
@@ -26,6 +14,18 @@
   import { onMount } from "svelte";
   import CloudSyncOutline from "svelte-material-icons/CloudSyncOutline.svelte";
   import Launch from "svelte-material-icons/Launch.svelte";
+  import { ThemeProvider } from "$lib/model/theme";
+  import { isLandscape, isLoading, kitchen } from "$lib/model/store";
+  import { pageManifests } from "$lib/model/manifests";
+  import {
+    isLandscapeDetect,
+    runTransition,
+    runTransitionRaw,
+    url,
+  } from "$lib/model/constants";
+  import Splash from "$lib/components/Splash.svelte";
+  import PageTransition from "$lib/components/PageTransition.svelte";
+  import BackToTop from "$lib/components/Back2Top.svelte";
   import type { PageData } from "./$types";
 
   export let data: PageData;

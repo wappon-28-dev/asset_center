@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { isLoading } from "$lib/model/store";
   import { onMount } from "svelte";
+  import { isLoading } from "$lib/model/store";
   import type { PageData } from "./$types";
 
   export let data: PageData;

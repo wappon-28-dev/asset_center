@@ -1,9 +1,9 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import Ready from "$lib/assets/Ready.svelte";
   import Meta from "$lib/components/Meta.svelte";
   import { pageManifests } from "$lib/model/manifests";
   import { isLoading } from "$lib/model/store";
-  import { onMount } from "svelte";
 
   onMount(() => ($isLoading = false));
 </script>

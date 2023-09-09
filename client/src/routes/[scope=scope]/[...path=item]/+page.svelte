@@ -1,12 +1,12 @@
 <script lang="ts">
-  import Inquiry from "$lib/assets/Inquiry.svelte";
-  import DownloadDialog from "$lib/components/DownloadDialog.svelte";
-  import { byteToUnit } from "$lib/model/constants";
-  import { isLoading } from "$lib/model/store";
   import Button, { Icon, Label } from "@smui/button";
   import Card, { Content } from "@smui/card";
   import FileEyeOutline from "svelte-material-icons/FileEyeOutline.svelte";
   import TrayArrowDown from "svelte-material-icons/TrayArrowDown.svelte";
+  import Inquiry from "$lib/assets/Inquiry.svelte";
+  import DownloadDialog from "$lib/components/DownloadDialog.svelte";
+  import { byteToUnit } from "$lib/model/constants";
+  import { isLoading } from "$lib/model/store";
   import type { PageData } from "./$types";
 
   export let data: PageData;

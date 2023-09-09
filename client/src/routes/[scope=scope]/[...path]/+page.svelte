@@ -1,12 +1,12 @@
 <script lang="ts">
-  import DownloadDialog from "$lib/components/DownloadDialog.svelte";
-  import { runTransitionRaw } from "$lib/model/constants";
-  import { isLoading } from "$lib/model/store";
   import Card, { Content } from "@smui/card";
   import List, { Graphic, Item, Label, Meta } from "@smui/list";
   import ArrowRight from "svelte-material-icons/ArrowRight.svelte";
   import FileDownloadOutline from "svelte-material-icons/FileDownloadOutline.svelte";
   import FolderOutline from "svelte-material-icons/FolderOutline.svelte";
+  import { isLoading } from "$lib/model/store";
+  import { runTransitionRaw } from "$lib/model/constants";
+  import DownloadDialog from "$lib/components/DownloadDialog.svelte";
   import type { PageData } from "./$types";
 
   export let data: PageData;
@@ -35,10 +35,11 @@
             <List class="demo-list" dense>
               {#each children.value as child, index}
                 <Item
-                  on:click={() =>
-                    runTransitionRaw(
-                      `${String(data.pathname)}/${String(child.name)}`
-                    )}
+                  on:click={async () => {
+                    await runTransitionRaw(
+                      `${String(data.pathname)}/${String(child.name)}`,
+                    );
+                  }}
                 >
                   <Graphic>
                     {#if child.folder == null}
