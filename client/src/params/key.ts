@@ -1,4 +1,5 @@
 import type { ParamMatcher } from "@sveltejs/kit";
+import { getAssetsManifests } from "$lib/model/constants";
 
 export const match = ((param) =>
-  /^public$|^protected$/.test(param)) satisfies ParamMatcher;
+  param in getAssetsManifests()) satisfies ParamMatcher;

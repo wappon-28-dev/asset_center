@@ -8,6 +8,7 @@
   import { byteToUnit } from "$lib/model/constants";
   import { isLoading } from "$lib/model/store";
   import type { PageData } from "./$types";
+  import Meta from "$lib/components/Meta.svelte";
 
   export let data: PageData;
   let open = false;
@@ -33,7 +34,18 @@
     {#await info}
       メタデータを読み込み中です…
     {:then { item }}
-      <br />
+      <Meta
+        pageManifest={{
+          meta: {
+            title: `${item.fields.DisplayName} | Assets Center`,
+            description: item.fields.Desc,
+            ogp: {
+              img: undefined,
+            },
+          },
+          path: data.pathname,
+        }}
+      />
       <Inquiry scale={1.5} />
       <br />
       <br />
