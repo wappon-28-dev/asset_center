@@ -9,6 +9,7 @@
   import { isLoading } from "$lib/model/store";
   import type { PageData } from "./$types";
   import Meta from "$lib/components/Meta.svelte";
+  import { sendAnalytics } from "$lib/model/analytics";
 
   export let data: PageData;
   let open = false;
@@ -63,6 +64,7 @@
                 variant="raised"
                 disabled={$isLoading}
                 on:click={async () => {
+                  sendAnalytics("download", item.webUrl);
                   openDialog(true);
                 }}
               >
@@ -76,6 +78,7 @@
                 variant="outlined"
                 disabled={$isLoading}
                 on:click={async () => {
+                  sendAnalytics("preview", item.webUrl);
                   openDialog(false);
                 }}
               >

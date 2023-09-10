@@ -24,6 +24,7 @@
     "@sveltejs/adapter-cloudflare": "^2.3.3",
     "@sveltejs/kit": "^1.24.1",
     "@tsconfig/strictest": "^2.0.2",
+    "@types/gtag.js": "^0.0.13",
     "@types/lodash": "^4.14.198",
     "@typescript-eslint/eslint-plugin": "^6.6.0",
     "@typescript-eslint/parser": "^6.6.0",
@@ -52,11 +53,9 @@
     "vitest": "^0.34.4"
   },
   "dependencies": {
-    "svelte": "^4.2.0",
-    "svelte-material-icons": "^3.0.5",
-    "svelte-scrollto": "^0.2.0",
     "@smui/button": "^7.0.0-beta.15",
     "@smui/card": "^7.0.0-beta.15",
+    "@smui/circular-progress": "^7.0.0-beta.15",
     "@smui/data-table": "^6.2.0",
     "@smui/dialog": "^7.0.0-beta.15",
     "@smui/drawer": "^7.0.0-beta.15",
@@ -72,9 +71,11 @@
     "@smui/tab-bar": "^7.0.0-beta.15",
     "@smui/textfield": "^7.0.0-beta.15",
     "@smui/top-app-bar": "^7.0.0-beta.15",
-    "@smui/circular-progress": "^7.0.0-beta.15",
     "axios": "^1.5.0",
     "hono": "^3.5.8",
+    "svelte": "^4.2.0",
+    "svelte-material-icons": "^3.0.5",
+    "svelte-scrollto": "^0.2.0",
     "zod": "^3.22.2"
   }
 }
