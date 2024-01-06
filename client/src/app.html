@@ -47,6 +47,15 @@
 
       gtag("config", "G-33YJBD42TQ");
     </script>
+    <script>
+      // microCMS の拡張フィールド (iframe) からのメッセージを受け取る
+      // 早期に一度しか postMessage されないため, Vite の HMR より先に実行させる.
+      if (document.location.pathname.includes("microcms")) {
+        window.addEventListener("message", (e) => {
+          window.microcmsIframeInitEvent = e;
+        });
+      }
+    </script>
 
     %sveltekit.head%
   </head>

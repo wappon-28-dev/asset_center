@@ -3,8 +3,17 @@
 
 /// <reference types="@sveltejs/kit" />
 
-declare namespace App {
-  // interface Error {}
-  // interface Locals {}
-  // interface PageData {}
+import type { GetDefaultDataMessage } from "microcms-field-extension-api";
+
+declare global {
+  declare namespace App {
+    // interface Error {}
+    // interface Locals {}
+    // interface PageData {}
+  }
+
+  interface Window {
+    microcmsIframeInitEvent: GetDefaultDataMessage;
+  }
+  declare let window: Window;
 }

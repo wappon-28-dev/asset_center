@@ -71,6 +71,7 @@
     "@smui/tab-bar": "^7.0.0-beta.15",
     "@smui/textfield": "^7.0.0-beta.15",
     "@smui/top-app-bar": "^7.0.0-beta.15",
+    "microcms-field-extension-api": "^1.0.0",
     "axios": "^1.5.0",
     "hono": "^3.5.8",
     "svelte": "^4.2.0",
