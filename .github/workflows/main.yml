@@ -14,13 +14,13 @@ jobs:
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
     steps:
       - name: 📥 Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: "true"
 
       - name: 📸 Calculate commit hash
         id: sha
-        uses: pr-mpt/actions-commit-hash@v2
+        uses: pr-mpt/actions-commit-hash@v3
 
       - name: 🔨 Prepare Bun environment
         uses: oven-sh/setup-bun@v1
@@ -37,13 +37,13 @@ jobs:
 
       - name: 🚀 Deploy to Cloudflare Pages
         id: cloudflare_pages_deploy
-        uses: cloudflare/pages-action@v1.4.0
+        uses: cloudflare/pages-action@v1
         with:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           projectName: assets-center
-          directory: ./client/.svelte-kit/cloudflare
+          directory: ./packages/client/.svelte-kit/cloudflare
 
       - name: 🚀 Deploy pages based on commit sha
         uses: actions/github-script@v6
