@@ -1,0 +1,7 @@
+name = "w28d_api"
+main = "src/index.ts"
+compatibility_date = "2023-06-28"
+
+kv_namespaces = [
+  { binding = "SHAREPOINT_ACCESS_TOKEN", id = "2f3c4cb5f09b45978fa3861a495e3ea3", preview_id = "cc2d6af740254bf3846bb529f4e68e8b" },
+]
