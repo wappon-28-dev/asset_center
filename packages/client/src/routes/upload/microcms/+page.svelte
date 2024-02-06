@@ -18,6 +18,19 @@
       width: "100%",
     });
   });
+
+  function onFileSelected(e): void {
+    if (!e.target.files) return;
+
+    const fileObject = e.target.files[0];
+    console.log(fileObject);
+  }
 </script>
 
-<p></p>
+<input
+  type="file"
+  accept=".jpg, .jpeg, .png"
+  on:change={(e) => {
+    onFileSelected(e);
+  }}
+/>
