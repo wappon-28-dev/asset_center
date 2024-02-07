@@ -12,11 +12,12 @@ export const load = (async ({ params }) => {
     const res = await apiGetItem(
       {
         param: { key },
+        // @ts-expect-error Hono のバグ...？
         query: { filePath },
       },
       {
         headers: {
-          authorization: getAuthHeader(key),
+          authorization: getAuthHeader("download", key),
           referer: PUBLIC_BASE_ORIGIN,
         },
       },

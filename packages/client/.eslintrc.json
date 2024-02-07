@@ -33,6 +33,7 @@
     "no-underscore-dangle": "off",
     "no-console": "off",
     "import/extensions": "off",
-    "@typescript-eslint/strict-boolean-expressions": "off"
+    "@typescript-eslint/strict-boolean-expressions": "off",
+    "import/no-unresolved": "off"
   }
 }

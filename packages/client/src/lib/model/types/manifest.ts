@@ -1,4 +1,4 @@
-export type AssetsManifests = Record<
+export type AssetManifests = Record<
   string, // id
   {
     accessKey: string;
