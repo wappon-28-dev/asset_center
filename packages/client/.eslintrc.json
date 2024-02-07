@@ -32,11 +32,6 @@
     "@typescript-eslint/consistent-type-definitions": ["error", "type"],
     "no-underscore-dangle": "off",
     "no-console": "off",
-    "import/no-cycle": "off",
-    "@typescript-eslint/prefer-nullish-coalescing": "off",
-    "@typescript-eslint/strict-boolean-expressions": "off",
-    "import/extensions": "off",
-    "import/no-unresolved": "off",
-    "import/no-mutable-exports": "off"
+    "import/extensions": "off"
   }
 }
