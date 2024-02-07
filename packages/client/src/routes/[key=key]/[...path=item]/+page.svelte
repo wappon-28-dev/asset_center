@@ -5,7 +5,7 @@
   import TrayArrowDown from "svelte-material-icons/TrayArrowDown.svelte";
   import Inquiry from "$lib/assets/Inquiry.svelte";
   import DownloadDialog from "$lib/components/DownloadDialog.svelte";
-  import { byteToUnit } from "$lib/model/constants";
+  import { byteToUnit, previewMimeType } from "$lib/model/constants";
   import { isLoading } from "$lib/model/store";
   import type { PageData } from "./$types";
   import Meta from "$lib/components/Meta.svelte";
@@ -74,19 +74,21 @@
                 <Label>{item.fields.DistName}</Label>
               </Button>
               <div style="padding: 0.2rem" />
-              <Button
-                variant="outlined"
-                disabled={$isLoading}
-                on:click={async () => {
-                  sendAnalytics("preview", item.webUrl);
-                  openDialog(false);
-                }}
-              >
-                <Icon>
-                  <FileEyeOutline />
-                </Icon>
-                <Label>プレビュー</Label>
-              </Button>
+              {#if previewMimeType.includes(item.driveItem.file?.mimeType ?? "")}
+                <Button
+                  variant="outlined"
+                  disabled={$isLoading}
+                  on:click={async () => {
+                    sendAnalytics("preview", item.webUrl);
+                    openDialog(false);
+                  }}
+                >
+                  <Icon>
+                    <FileEyeOutline />
+                  </Icon>
+                  <Label>プレビュー</Label>
+                </Button>
+              {/if}
             </Content>
           </div>
         </Card>

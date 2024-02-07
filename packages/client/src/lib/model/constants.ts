@@ -73,3 +73,19 @@ export function getAuthHeader(key: keyof AssetsManifests): string {
 
   return `Bearer ${manifest.accessKey}`;
 }
+
+export const previewMimeType = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/gif",
+  "video/mp4",
+  "video/webm",
+  "video/ogg",
+  "audio/mpeg",
+  "audio/ogg",
+  "audio/wav",
+  "audio/webm",
+  "application/pdf",
+  "text/plain",
+];

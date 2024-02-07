@@ -2,6 +2,7 @@ import type { InferResponseType } from "hono";
 import { client } from "$lib/model/service/client";
 import type { PageLoad } from "./$types";
 import { getAuthHeader } from "$lib/model/constants";
+import { PUBLIC_BASE_ORIGIN } from "$env/static/public";
 
 export const load = (async ({ params }) => {
   const { path: dirPath, key } = params;
@@ -18,19 +19,16 @@ export const load = (async ({ params }) => {
       {
         headers: {
           authorization: getAuthHeader(key),
+          referer: PUBLIC_BASE_ORIGIN,
         },
       },
     );
-    const data = await res.json();
 
-    if (res.ok) {
-      return data;
+    if (!res.ok) {
+      throw new Error(await res.text());
     }
-    if (res.status === 404) {
-      throw new Error("ASSET_NOT_FOUND");
-    } else {
-      throw new Error(`FETCH_ERROR ${String(await res.text())}`);
-    }
+
+    return await res.json();
   }
 
   return { getChildren };

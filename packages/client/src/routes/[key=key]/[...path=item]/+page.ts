@@ -22,14 +22,11 @@ export const load = (async ({ params }) => {
       },
     );
 
-    if (res.ok) {
-      return res.json();
+    if (!res.ok) {
+      throw new Error(await res.text());
     }
-    if (res.status === 404) {
-      throw new Error("ASSET_NOT_FOUND");
-    } else {
-      throw new Error(`FETCH_ERROR: ${String(await res.text())}`);
-    }
+
+    return await res.json();
   }
   return { getItem };
 }) satisfies PageLoad;
