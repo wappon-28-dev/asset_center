@@ -14,11 +14,12 @@ export const load = (async ({ params }) => {
     const res = await apiGetChildren(
       {
         param: { key },
+        // @ts-expect-error: Hono のバグかも...？
         query: { dirPath },
       },
       {
         headers: {
-          authorization: getAuthHeader(key),
+          authorization: getAuthHeader("download", key),
           referer: PUBLIC_BASE_ORIGIN,
         },
       },

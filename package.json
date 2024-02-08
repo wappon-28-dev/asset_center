@@ -6,8 +6,7 @@
   "scripts": {
     "build": "cd packages/client && bun run build",
     "dev": "cd packages/client && bun run dev",
-    "dev:api": "cd packages/api && bun run dev",
-    "prepare": "cd packages/client && bun run prepare"
+    "dev:api": "cd packages/api && bun run dev"
   },
   "workspaces": [
     "packages/*"

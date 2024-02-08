@@ -49,7 +49,8 @@
     "typescript": "*",
     "vite": "^4.5.2",
     "vite-plugin-compression": "^0.5.1",
-    "vitest": "^0.34.4"
+    "vitest": "^0.34.4",
+    "@microsoft/microsoft-graph-types": "^2.40.0"
   },
   "dependencies": {
     "@smui/button": "^7.0.0-beta.15",
@@ -77,6 +78,12 @@
     "svelte-material-icons": "^3.0.5",
     "svelte-scrollto": "^0.2.0",
     "zod": "^3.22.3",
-    "w28d_api": "workspace:*"
+    "w28d_api": "workspace:*",
+    "svelte-filepond": "^0.2.2",
+    "filepond": "^4.30.6",
+    "filepond-plugin-image-preview": "^4.6.12",
+    "filepond-plugin-image-exif-orientation": "^1.0.11",
+    "filepond-plugin-media-preview": "^1.0.11",
+    "@microsoft/microsoft-graph-client": "^3.0.7"
   }
 }

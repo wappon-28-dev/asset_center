@@ -12,7 +12,7 @@ export const load = (async ({ params }) => {
     const res = await apiGetItem(
       {
         param: { key },
-        // @ts-expect-error Hono のバグ...？
+        // @ts-expect-error: Hono のバグかも...？
         query: { filePath },
       },
       {
