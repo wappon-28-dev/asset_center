@@ -53,6 +53,7 @@
       if (document.location.pathname.includes("microcms")) {
         window.addEventListener("message", (e) => {
           window.microcmsIframeInitEvent = e;
+          console.log(e);
         });
       }
     </script>

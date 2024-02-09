@@ -4,6 +4,7 @@ import {
   type UpdateStyleMessage,
   type PostDataMessage,
 } from "microcms-field-extension-api";
+import type { UploadedFileListMessage } from "../types/microcms";
 
 export class ParentController {
   public id: string;
@@ -15,6 +16,11 @@ export class ParentController {
   }
 
   private readonly postMessage = window.parent.postMessage.bind(window.parent);
+
+  public getDefaultData(): UploadedFileListMessage | undefined {
+    if (this.initEvent.data.message?.data == null) return undefined;
+    return this.initEvent.data.message as unknown as UploadedFileListMessage;
+  }
 
   public updateStyle(style: UpdateStyleMessage["message"]): void {
     const data = {

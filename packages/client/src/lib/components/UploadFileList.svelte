@@ -1,10 +1,10 @@
 <script lang="ts">
-  import type { GetDefaultDataMessage } from "microcms-field-extension-api";
+  import type { UploadedFileListMapMessage } from "$lib/model/types/microcms";
 
-  export let data: GetDefaultDataMessage["data"];
+  export let uploadedFileListMap: UploadedFileListMapMessage["data"];
 </script>
 
-{JSON.stringify(data.message)}
+{uploadedFileListMap.fileList.map((d) => d.name).join(", ")}
 
 <style lang="scss">
 </style>

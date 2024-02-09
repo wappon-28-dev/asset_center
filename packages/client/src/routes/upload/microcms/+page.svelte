@@ -8,6 +8,7 @@
   import { ParentController } from "$lib/model/service/microcms";
   import { goto } from "$app/navigation";
   import UploadFileList from "$lib/components/UploadFileList.svelte";
+  import type { UploadedFileListMapMessage } from "$lib/model/types/microcms";
 
   let parentUrl: string;
   let controller: ParentController;
@@ -15,6 +16,8 @@
 
   let key: string;
   let targetPath: string;
+
+  let uploadedFileListMap: UploadedFileListMapMessage["data"];
 
   $: {
     isValid =
@@ -49,15 +52,43 @@
     });
 
     [key] = new URL(controller.origin).hostname.split(".");
+
+    const uploadedFileListData = controller.getDefaultData();
+    if (uploadedFileListData != null) {
+      uploadedFileListMap = uploadedFileListData.data;
+    } else {
+      uploadedFileListMap = {
+        targetPath: "",
+        fileList: [],
+      };
+    }
   });
 
   const onUploaded: ComponentProps<DragAndDrop>["onUploaded"] = (driveItem) => {
-    const { id, name: title, lastModifiedDateTime } = driveItem;
+    const { lastModifiedDateTime } = driveItem;
+
+    const newUploadedFileList = [...uploadedFileListMap.fileList, driveItem];
     const updatedAt =
       lastModifiedDateTime != null
         ? new Date(lastModifiedDateTime)
         : new Date();
-    // TODO: microCMS に POST する処理を実装する
+
+    const message: UploadedFileListMapMessage = {
+      id: controller.id,
+      title: `${newUploadedFileList.length} 件のアップロードされたファイル`,
+      updatedAt,
+      data: {
+        targetPath: uploadedFileListMap.targetPath,
+        fileList: newUploadedFileList,
+      },
+    };
+
+    console.log(`message => ${JSON.stringify(message)}`);
+    controller.postData<typeof uploadedFileListMap>(message);
+    uploadedFileListMap = {
+      targetPath: uploadedFileListMap.targetPath,
+      fileList: newUploadedFileList,
+    };
   };
 </script>
 
@@ -66,7 +97,7 @@
     <div>アップロード済みファイル</div>
     <div class="content">
       {#if controller != null}
-        <UploadFileList data={controller.initEvent.data} />
+        <UploadFileList {uploadedFileListMap} />
       {:else}
         <div>読み込み中...</div>
       {/if}

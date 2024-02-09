@@ -1,9 +1,11 @@
 import type { DriveItem } from "@microsoft/microsoft-graph-types";
 
-export type UploadedData = {
+export type UploadedFileListMapMessage = {
   id: string;
-  title: "アップロードされたファイル";
-  description: string;
+  title: string;
   updatedAt: Date;
-  data: DriveItem[];
+  data: {
+    targetPath: string;
+    fileList: DriveItem[];
+  };
 };
