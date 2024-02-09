@@ -126,7 +126,7 @@
   }
 
   .path {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     padding: 10px;
@@ -135,13 +135,13 @@
     color: var(--m3-on-surface);
 
     &:not(.isLandscape) {
-      position: absolute;
+      position: fixed;
       top: 6%;
       left: 0;
     }
   }
   .author {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     right: 0;
     padding: 10px;

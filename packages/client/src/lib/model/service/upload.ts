@@ -4,6 +4,7 @@ import {
   Client,
   type LargeFileUploadTaskOptions,
 } from "@microsoft/microsoft-graph-client";
+import type { DriveItem } from "@microsoft/microsoft-graph-types";
 import type {
   FilePondServerConfigProps,
   ProcessServerConfigFunction,
@@ -42,15 +43,21 @@ async function getUploadUrl(
 }
 
 const getHandleProcess =
-  (key: string, targetPath: string): ProcessServerConfigFunction =>
+  (
+    key: string,
+    targetPath: string,
+    onUploaded: (driveItem: DriveItem) => void,
+  ): ProcessServerConfigFunction =>
   (fieldName, file, _, load, error, progress, abort) => {
-    console.log(`Called process fn: #${fieldName}; to upload ${file.name}`);
+    console.log(
+      `Called process fn: #${fieldName}; to upload ${file.name} with ${key}`,
+    );
 
     const filePath = [targetPath, file.name].join("/");
 
-    void getUploadUrl(key, filePath).then(({ url, isCancelled, expiry }) => {
+    void (async () => {
+      const { url, isCancelled, expiry } = await getUploadUrl(key, filePath);
       console.log(`Requested upload URL`);
-
       const fileUpload = new FileUpload(file, file.name, file.size);
       console.log(fileUpload);
 
@@ -77,33 +84,32 @@ const getHandleProcess =
         options,
       );
 
-      uploadTask
-        .upload()
-        .then((result) => {
-          console.log("Uploaded successfully");
+      const result = await uploadTask.upload().catch((e) => {
+        error(e);
+        abort();
+        throw e;
+      });
 
-          load(result);
-          console.log(result);
+      console.log("Uploaded successfully");
 
-          return {
-            abort: () => {
-              void uploadTask.cancel();
-              console.log("abort");
-              abort();
-            },
-          };
-        })
-        .catch((e) => {
-          error(e);
+      load(result);
+      console.log(result);
+      onUploaded(result.responseBody as DriveItem);
+
+      return {
+        abort: () => {
+          void uploadTask.cancel();
+          console.log("abort");
           abort();
-          throw e;
-        });
-    });
+        },
+      };
+    })();
   };
 
 export const getServerConfig = (
   key: string,
   targetPath: string,
+  onUploaded: Parameters<typeof getHandleProcess>["2"],
 ): FilePondServerConfigProps["server"] => ({
-  process: getHandleProcess(key, targetPath),
+  process: getHandleProcess(key, targetPath, onUploaded),
 });

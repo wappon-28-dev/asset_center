@@ -12,6 +12,7 @@
 
   export let key: string;
   export let targetPath: string;
+  export let onUploaded: Parameters<typeof getServerConfig>["2"];
 
   let pond: FilePond;
 
@@ -37,6 +38,6 @@
   name="filepond"
   allowMultiple={true}
   allowBrowse={true}
-  server={getServerConfig(key, targetPath)}
+  server={getServerConfig(key, targetPath, onUploaded)}
   allowRevert={false}
 />
