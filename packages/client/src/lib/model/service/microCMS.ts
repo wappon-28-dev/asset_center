@@ -4,7 +4,7 @@ import {
   type UpdateStyleMessage,
   type PostDataMessage,
 } from "microcms-field-extension-api";
-import type { UploadedFileListMessage } from "../types/microcms";
+import type { UploadedFileListMapMessage } from "../types/microcms";
 
 export class ParentController {
   public id: string;
@@ -17,9 +17,15 @@ export class ParentController {
 
   private readonly postMessage = window.parent.postMessage.bind(window.parent);
 
-  public getDefaultData(): UploadedFileListMessage | undefined {
-    if (this.initEvent.data.message?.data == null) return undefined;
-    return this.initEvent.data.message as unknown as UploadedFileListMessage;
+  public getDefaultData(): UploadedFileListMapMessage | undefined {
+    if (this.initEvent.data == null) {
+      throw new Error("Default data is not found");
+    }
+    return this.initEvent.data.message as UploadedFileListMapMessage;
+  }
+
+  public combineUrlWith(targetPath: string): string {
+    return [this.origin, "apis", targetPath].join("/");
   }
 
   public updateStyle(style: UpdateStyleMessage["message"]): void {

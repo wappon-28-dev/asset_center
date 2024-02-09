@@ -12,10 +12,10 @@ export type KitchenArgs = {
     onClick: () => void;
     text: string;
   }>;
-  dismissButton: boolean;
-  onDismiss: () => void;
+  dismissButton?: boolean;
+  onDismiss?: () => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onClose: (e: any) => void;
+  onClose?: (e: any) => void;
 };
 
 export const pushSnackbar = (args: KitchenArgs): void => {

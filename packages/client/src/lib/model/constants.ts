@@ -12,6 +12,9 @@ import {
 
 export type valueOf<T> = T[keyof T];
 export type PickType<T, K extends keyof T> = T[K];
+export type Replace<T, U> = {
+  [P in keyof T]: P extends keyof U ? U[P] : T[P];
+};
 
 export const waitMs = async (ms: number): Promise<void> => {
   await new Promise((resolve) => {

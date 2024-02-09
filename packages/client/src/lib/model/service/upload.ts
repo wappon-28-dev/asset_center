@@ -50,13 +50,20 @@ const getHandleProcess =
   ): ProcessServerConfigFunction =>
   (fieldName, file, _, load, error, progress, abort) => {
     console.log(
-      `Called process fn: #${fieldName}; to upload ${file.name} with ${key}`,
+      `Called process fn: #${fieldName} to upload ${file.name} with ${key} to ${targetPath}`,
     );
 
     const filePath = [targetPath, file.name].join("/");
 
     void (async () => {
-      const { url, isCancelled, expiry } = await getUploadUrl(key, filePath);
+      const { url, isCancelled, expiry } = await getUploadUrl(
+        key,
+        filePath,
+      ).catch((e) => {
+        error(e);
+        throw e;
+      });
+
       console.log(`Requested upload URL`);
       const fileUpload = new FileUpload(file, file.name, file.size);
       console.log(fileUpload);
@@ -86,7 +93,6 @@ const getHandleProcess =
 
       const result = await uploadTask.upload().catch((e) => {
         error(e);
-        abort();
         throw e;
       });
 

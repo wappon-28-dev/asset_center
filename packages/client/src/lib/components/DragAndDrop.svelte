@@ -33,6 +33,7 @@
   });
 </script>
 
+<!-- 既に存在するとき, なぜか動かない -->
 <FilePond
   bind:this={pond}
   name="filepond"
