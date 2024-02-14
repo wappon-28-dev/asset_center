@@ -7,11 +7,11 @@
 
   let hidden = true;
 
-  function scrollContainer() {
+  function scrollContainer(): HTMLElement {
     return document.documentElement || document.body;
   }
 
-  function handleOnScroll() {
+  function handleOnScroll(): void {
     if (!scrollContainer()) return;
     hidden = !(scrollContainer().scrollTop > showOnPx);
   }

@@ -27,6 +27,7 @@
   import PageTransition from "$lib/components/PageTransition.svelte";
   import BackToTop from "$lib/components/Back2Top.svelte";
   import type { PageData } from "./$types";
+  import Footer from "$lib/components/Footer.svelte";
 
   export let data: PageData;
 
@@ -98,10 +99,7 @@
     </AppContent>
   </AutoAdjust>
 
-  <div class="path" class:isLandscape={$isLandscape}>
-    <code>{data.pathname}</code>
-  </div>
-  <div class="author">powered by @wappon28dev / わっぽん</div>
+  <Footer pathname={data.pathname} />
   <BackToTop />
 </div>
 <Splash isMounting={!hasMounted} isLoading={$isLoading} />
@@ -123,30 +121,5 @@
   .progress-mobile {
     margin-top: -5.5px;
     min-height: 4px;
-  }
-
-  .path {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    padding: 10px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: var(--m3-on-surface);
-
-    &:not(.isLandscape) {
-      position: fixed;
-      top: 6%;
-      left: 0;
-    }
-  }
-  .author {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    padding: 10px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: var(--m3-on-surface);
   }
 </style>

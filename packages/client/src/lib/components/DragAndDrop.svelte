@@ -4,7 +4,11 @@
   import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
   import FilePondPluginImagePreview from "filepond-plugin-image-preview";
   import FilePondPluginMediaPreview from "filepond-plugin-media-preview";
-  import { getServerConfig } from "$lib/model/service/upload";
+  import {
+    getServerConfig,
+    uploadManifestKey,
+    uploadManifestTargetPath,
+  } from "$lib/model/service/upload";
 
   import "filepond/dist/filepond.css";
   import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
@@ -12,9 +16,17 @@
 
   export let key: string;
   export let targetPath: string;
-  export let onUploaded: Parameters<typeof getServerConfig>["2"];
+  export let onUploaded: Parameters<typeof getServerConfig>["0"];
 
   let pond: FilePond;
+
+  // NOTE: ref: $lib/model/service/upload.ts
+  $: {
+    if (key != null || targetPath != null) {
+      $uploadManifestKey = key;
+      $uploadManifestTargetPath = targetPath;
+    }
+  }
 
   registerPlugin(
     FilePondPluginImageExifOrientation,
@@ -33,12 +45,11 @@
   });
 </script>
 
-<!-- 既に存在するとき, なぜか動かない -->
 <FilePond
   bind:this={pond}
   name="filepond"
   allowMultiple={true}
   allowBrowse={true}
-  server={getServerConfig(key, targetPath, onUploaded)}
+  server={getServerConfig(onUploaded)}
   allowRevert={false}
 />

@@ -10,9 +10,15 @@ import type {
   ProcessServerConfigFunction,
 } from "filepond";
 import type { InferResponseType } from "hono";
+import { get, writable } from "svelte/store";
 import { PUBLIC_BASE_ORIGIN } from "$env/static/public";
 import { getAuthHeader } from "../constants";
 import { client } from "./client";
+
+// FIXME: なぜか引数渡しだと undefined になる.
+// workaround: svelte store として公開.
+export const uploadManifestKey = writable<string | undefined>(undefined);
+export const uploadManifestTargetPath = writable<string | undefined>(undefined);
 
 const api = client.v1.assets[":key"].item.$post;
 
@@ -43,12 +49,15 @@ async function getUploadUrl(
 }
 
 const getHandleProcess =
-  (
-    key: string,
-    targetPath: string,
-    onUploaded: (driveItem: DriveItem) => void,
-  ): ProcessServerConfigFunction =>
+  (onUploaded: (driveItem: DriveItem) => void): ProcessServerConfigFunction =>
   (fieldName, file, _, load, error, progress, abort) => {
+    const key = get(uploadManifestKey);
+    const targetPath = get(uploadManifestTargetPath);
+
+    if (key == null || targetPath == null) {
+      throw new Error("Key or targetPath is not set");
+    }
+
     console.log(
       `Called process fn: #${fieldName} to upload ${file.name} with ${key} to ${targetPath}`,
     );
@@ -113,9 +122,7 @@ const getHandleProcess =
   };
 
 export const getServerConfig = (
-  key: string,
-  targetPath: string,
-  onUploaded: Parameters<typeof getHandleProcess>["2"],
+  onUploaded: Parameters<typeof getHandleProcess>["0"],
 ): FilePondServerConfigProps["server"] => ({
-  process: getHandleProcess(key, targetPath, onUploaded),
+  process: getHandleProcess(onUploaded),
 });
