@@ -3,6 +3,7 @@
   import Textfield from "@smui/textfield";
   import { z } from "zod";
   import HelperText from "@smui/textfield/helper-text";
+  import type { GetDefaultDataMessage } from "microcms-field-extension-api";
   import { isLoading } from "$lib/model/store";
   import DragAndDrop from "$lib/components/DragAndDrop.svelte";
   import { ParentController } from "$lib/model/service/microcms";
@@ -46,11 +47,11 @@
     }
   }
 
-  onMount(() => {
-    $isLoading = false;
+  function handleEvent(initEvent: GetDefaultDataMessage): void {
+    const isInMicrocms =
+      initEvent != null &&
+      initEvent.data.action === "MICROCMS_GET_DEFAULT_DATA";
 
-    const initEvent = window.microcmsIframeInitEvent;
-    const isInMicrocms = "user" in initEvent.data;
     if (!isInMicrocms) {
       void goto("/").then(() => {
         pushSnackbar({
@@ -61,6 +62,7 @@
           "`initEvent` doesn't contain `user` attribute; `window` is not in microCMS iframe.",
         );
       });
+      return;
     }
 
     controller = new ParentController(initEvent);
@@ -77,6 +79,19 @@
       [key] = new URL(parentUrl).hostname.split(".");
       lockParentUrl = true;
     }
+  }
+
+  onMount(() => {
+    $isLoading = false;
+
+    if (import.meta.env.DEV) {
+      console.log("DEV");
+      handleEvent(window.microcmsIframeInitEvent);
+    }
+
+    return () => {
+      window.removeEventListener("message", handleEvent);
+    };
   });
 
   const onUploaded: ComponentProps<DragAndDrop>["onUploaded"] = (driveItem) => {
@@ -121,6 +136,7 @@
   };
 </script>
 
+<svelte:window on:message={handleEvent} />
 <main>
   <section class="file-list">
     <div>アップロード済みファイル</div>
