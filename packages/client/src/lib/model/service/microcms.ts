@@ -4,7 +4,13 @@ import {
   type UpdateStyleMessage,
   type PostDataMessage,
 } from "microcms-field-extension-api";
-import type { UploadedFileListMapMessage } from "../types/microcms";
+import type { DriveItem } from "@microsoft/microsoft-graph-types";
+import {
+  zUploadedFileListMap,
+  type UploadedFileListMapMessage,
+  type UploadedFileList,
+} from "../types/microcms";
+import { getAssetsManifests, type ArrayElem } from "../constants";
 
 export class ParentController {
   public id: string;
@@ -46,4 +52,23 @@ export class ParentController {
 
     sendFieldExtensionMessage(data, this.origin);
   }
+}
+
+export function driveItem2UploadedFile(
+  key: string,
+  driveItem: DriveItem,
+): ArrayElem<UploadedFileList> {
+  const { name, size, fileSystemInfo, file, webUrl } = driveItem;
+  const { from, to } = getAssetsManifests().upload[key].assetsUrl;
+
+  return zUploadedFileListMap.shape.fileList._def.type.parse({
+    name,
+    size,
+    fileSystemInfo: {
+      createdDateTime: fileSystemInfo?.createdDateTime,
+      lastModifiedDateTime: fileSystemInfo?.lastModifiedDateTime,
+      mimeType: file?.mimeType,
+    },
+    webUrl: webUrl?.replace(from, to),
+  });
 }

@@ -15,6 +15,8 @@ export type PickType<T, K extends keyof T> = T[K];
 export type Replace<T, U> = {
   [P in keyof T]: P extends keyof U ? U[P] : T[P];
 };
+export type ArrayElem<ArrayType extends readonly unknown[]> =
+  ArrayType extends ReadonlyArray<infer ElementType> ? ElementType : never;
 
 export const waitMs = async (ms: number): Promise<void> => {
   await new Promise((resolve) => {

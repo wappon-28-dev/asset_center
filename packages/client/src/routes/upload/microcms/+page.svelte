@@ -6,11 +6,18 @@
   import type { GetDefaultDataMessage } from "microcms-field-extension-api";
   import { isLoading } from "$lib/model/store";
   import DragAndDrop from "$lib/components/DragAndDrop.svelte";
-  import { ParentController } from "$lib/model/service/microcms";
+  import {
+    ParentController,
+    driveItem2UploadedFile,
+  } from "$lib/model/service/microcms";
   import { goto } from "$app/navigation";
   import UploadFileList from "$lib/components/UploadFileList.svelte";
-  import type { UploadedFileListMapMessage } from "$lib/model/types/microcms";
+  import type {
+    UploadedFileList,
+    UploadedFileListMapMessage,
+  } from "$lib/model/types/microcms";
   import { pushSnackbar } from "$lib/components/kitchen";
+  import type { ArrayElem } from "$lib/model/constants";
 
   let parentUrl: string;
   let lockParentUrl = false;
@@ -94,8 +101,6 @@
   });
 
   const onUploaded: ComponentProps<DragAndDrop>["onUploaded"] = (driveItem) => {
-    const { lastModifiedDateTime } = driveItem;
-
     if (!isValid) throw new Error("`parentUrl` is not valid.");
 
     uploadedFileListMap ??= {
@@ -103,16 +108,31 @@
       fileList: [],
     };
 
-    const newUploadedFileList = [...uploadedFileListMap.fileList, driveItem];
-    const updatedAt =
-      lastModifiedDateTime != null
-        ? new Date(lastModifiedDateTime)
-        : new Date();
+    let newUploadedFile: ArrayElem<UploadedFileList>;
+
+    try {
+      newUploadedFile = driveItem2UploadedFile(key, driveItem);
+    } catch (e) {
+      pushSnackbar({
+        label:
+          "🚫 microCMS にアップロードしたファイルの一覧を保存できませんでした",
+        props: {
+          timeoutMs: 7000,
+        },
+      });
+      throw e;
+    }
+
+    // `name` が同じ場合は上書きする
+    const newUploadedFileList = [
+      ...uploadedFileListMap.fileList,
+      newUploadedFile,
+    ].filter((d, i, self) => self.findIndex((dd) => dd.name === d.name) === i);
 
     const message: UploadedFileListMapMessage = {
       id: controller.id,
       title: `${newUploadedFileList.length} 件のアップロードされたファイル`,
-      updatedAt,
+      updatedAt: new Date(),
       data: {
         targetPath: uploadedFileListMap.targetPath,
         fileList: newUploadedFileList,
@@ -120,10 +140,7 @@
     };
 
     controller.postData<typeof uploadedFileListMap>(message);
-    uploadedFileListMap = {
-      targetPath: uploadedFileListMap.targetPath,
-      fileList: newUploadedFileList,
-    };
+    uploadedFileListMap = message.data;
     lockParentUrl = true;
     pushSnackbar({
       label:
@@ -140,7 +157,7 @@
     <div>アップロード済みファイル</div>
     <div class="content">
       {#if controller != null}
-        <UploadFileList {uploadedFileListMap} />
+        <UploadFileList uploadedFileList={uploadedFileListMap?.fileList} />
       {:else}
         <div>読み込み中...</div>
       {/if}

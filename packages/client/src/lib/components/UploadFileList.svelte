@@ -1,13 +1,11 @@
 <script lang="ts">
-  import type { UploadedFileListMapMessage } from "$lib/model/types/microcms";
+  import type { UploadedFileList } from "$lib/model/types/microcms";
 
-  export let uploadedFileListMap:
-    | UploadedFileListMapMessage["data"]
-    | undefined;
+  export let uploadedFileList: UploadedFileList | undefined;
 </script>
 
-{#if uploadedFileListMap != null}
-  {uploadedFileListMap.fileList.map((d) => d.name).join(", ")}
+{#if uploadedFileList != null}
+  {uploadedFileList.map((d) => d.name).join(", ")}
 {:else}
   <p>ファイルがありません</p>
 {/if}
