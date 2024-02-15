@@ -48,6 +48,8 @@
   }
 
   function handleEvent(initEvent: GetDefaultDataMessage): void {
+    window.removeEventListener("message", handleEvent);
+
     const isInMicrocms =
       initEvent != null &&
       initEvent.data.action === "MICROCMS_GET_DEFAULT_DATA";
@@ -85,13 +87,10 @@
     $isLoading = false;
 
     if (import.meta.env.DEV) {
-      console.log("DEV");
       handleEvent(window.microcmsIframeInitEvent);
+    } else {
+      window.addEventListener("message", handleEvent);
     }
-
-    return () => {
-      window.removeEventListener("message", handleEvent);
-    };
   });
 
   const onUploaded: ComponentProps<DragAndDrop>["onUploaded"] = (driveItem) => {
@@ -136,7 +135,6 @@
   };
 </script>
 
-<svelte:window on:message={handleEvent} />
 <main>
   <section class="file-list">
     <div>アップロード済みファイル</div>
@@ -151,7 +149,7 @@
   <section class="file-upload">
     <section>
       <div class="title" class:disabled={lockParentUrl}>
-        1. 親ページの URL を貼り付け {lockParentUrl && "(不要)"}
+        1. 親ページの URL を貼り付け {lockParentUrl ? "(不要)" : ""}
       </div>
       <div class="content">
         <Textfield
