@@ -4,6 +4,7 @@
   import { z } from "zod";
   import HelperText from "@smui/textfield/helper-text";
   import type { GetDefaultDataMessage } from "microcms-field-extension-api";
+  import LinearProgress from "@smui/linear-progress";
   import { isLoading } from "$lib/model/store";
   import DragAndDrop from "$lib/components/DragAndDrop.svelte";
   import {
@@ -11,7 +12,7 @@
     driveItem2UploadedFile,
   } from "$lib/model/service/microcms";
   import { goto } from "$app/navigation";
-  import UploadFileList from "$lib/components/UploadFileList.svelte";
+  import UploadedFileListComp from "$lib/components/UploadedFileList.svelte";
   import type {
     UploadedFileList,
     UploadedFileListMapMessage,
@@ -77,7 +78,7 @@
     controller = new ParentController(initEvent);
     console.log("controller =>", controller);
     controller.updateStyle({
-      height: 600,
+      height: 700,
       width: "100%",
     });
 
@@ -92,7 +93,6 @@
 
   onMount(() => {
     $isLoading = false;
-
     if (import.meta.env.DEV) {
       handleEvent(window.microcmsIframeInitEvent);
     } else {
@@ -157,9 +157,11 @@
     <div>アップロード済みファイル</div>
     <div class="content">
       {#if controller != null}
-        <UploadFileList uploadedFileList={uploadedFileListMap?.fileList} />
+        <UploadedFileListComp
+          uploadedFileList={uploadedFileListMap?.fileList ?? []}
+        />
       {:else}
-        <div>読み込み中...</div>
+        <LinearProgress indeterminate />
       {/if}
     </div>
   </section>
@@ -211,6 +213,12 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
     gap: 20px;
+
+    .file-list {
+      .content {
+        padding: 10px 0;
+      }
+    }
 
     .file-upload {
       display: flex;

@@ -22,7 +22,7 @@
 
 <style lang="scss">
   .container {
-    height: calc(100vh - var(--app-bar-height));
+    height: 85vh;
     display: table;
     margin: 0 auto;
 
