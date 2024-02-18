@@ -12,7 +12,7 @@ import type {
 import type { InferResponseType } from "hono";
 import { get, writable } from "svelte/store";
 import { PUBLIC_BASE_ORIGIN } from "$env/static/public";
-import { getAuthHeader } from "../constants";
+import { getAssetsManifests, getAuthHeader } from "../constants";
 import { client } from "./client";
 
 // FIXME: なぜか引数渡しだと undefined になる.
@@ -26,7 +26,8 @@ async function getUploadUrl(
   key: string,
   filePath: string,
 ): Promise<InferResponseType<typeof api>> {
-  const encodedFilePath = encodeURIComponent(filePath);
+  const { basePath } = getAssetsManifests().upload[key];
+  const encodedFilePath = encodeURIComponent([basePath, filePath].join("/"));
 
   const res = await api(
     {
